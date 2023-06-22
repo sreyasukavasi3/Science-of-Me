@@ -15,9 +15,8 @@ import imageKeyboardResponse from '@jspsych/plugin-image-keyboard-response';
 import {saveData} from "../../Utilities/SaveData";
 
 let final =[];
+const data = [];
 let currentScore = 0;
-let j = 0;
-let k = 0;
 const API_ENDPOINT = "https://e06hz3blkk.execute-api.us-east-2.amazonaws.com/default/GetsignedurlMemorylimit";
 const trials = [
 	{
@@ -73,8 +72,8 @@ function PeripheralVision(props) {
 		};
 
 		// Add welcome step to timeline
-		timeline.push(welcome2);
-
+		timeline.push(welcome2);   
+        
 
 		// Adding present images list
 		const present = ['p', 'q','d','b','o','p','q','d','b','o',
@@ -87,30 +86,62 @@ function PeripheralVision(props) {
 
         // const size = [0.6, 0.4, 0.2, 0.12, 0.08]
         const sizes = [600, 400, 200, 120, 80]
-		const corrAns = ['', '','','','','','','','','',
+		const corrAns = ['1', '1','1','1','1','1','1','1','1','1',
         'p','q','d','b','o','p','q','d','b','o',
         'p','q','d','b','o','p','q','d','b','o']
 		
+        // Shuffling function
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+          
+        const shuffleIndex = Array.from(Array(present.length).keys());
+        shuffleArray(shuffleIndex);
+
+        const shuffledPresent = shuffleIndex.map((index) => present[index]);
+        const shuffledXCord = shuffleIndex.map((index) => x_cord[index % 4]);
+        const shuffledYCord = shuffleIndex.map((index) => y_cord[index % 4]);
+        const shuffledCorrAns = shuffleIndex.map((index) => corrAns[index]);
+
         for (let t = 0; t < 5; t++) {
             const textSize = sizes[t];
+            
+            // for (let i = 0; i < 30; i++) {
+            //     const row = {
+            //         Present: shuffledPresent,
+            //         XCord: shuffledXCord,
+            //         YCord: shuffledYCord,
+            //         CorrAns: shuffledCorrAns,
+            //       };
+              
+            //       data.push(row);
+            // }
+            // console.log('printing table:', data);
+            // console.log(data[0][0]);
+            // console.table(data);
+
+
             for (let i = 0; i < 30; i++) {
-                if(i<10){
+                console.log('print somethingggg',i,shuffledXCord[i], shuffledYCord[i], shuffledCorrAns[i] );
+                if(shuffledCorrAns[i] == '1'){
                     const t1Stimulus1 = {
                         type: htmlKeyboardResponse,
-                        stimulus: `<div style="position: absolute; font-size: ${textSize}%;">${present[i]}</div>`,
+                        stimulus: `<div style="position: absolute; font-size: ${textSize}%;">${shuffledPresent[i]}</div>`,
                         choices: "NO_KEYS",
-                        trial_duration: 1000,
+                        trial_duration: 500,
                     };
         
                     timeline.push(t1Stimulus1);
 
                 }else {
-                    const cornerIndex = i % 4;
                     const t1Stimulus1 = {
                     type: htmlKeyboardResponse,
-                    stimulus: `<div style="position: absolute; ${x_cord[cornerIndex]}: 50px; ${y_cord[cornerIndex]}: 50px; font-size: ${textSize}%;">${present[i]}</div>`,
+                    stimulus: `<div style="position: absolute; ${shuffledXCord[i]}: 50px; ${shuffledYCord[i]}: 50px; font-size: ${textSize}%;">${shuffledPresent[i]}</div>`,
                     choices: "NO_KEYS",
-                    trial_duration: 1000,
+                    trial_duration: 500,
                     };
 
                     timeline.push(t1Stimulus1);
@@ -127,11 +158,11 @@ function PeripheralVision(props) {
 				
 				data: {
 					task: 'response',
-					correct_response: corrAns[i]
+					correct_response: shuffledCorrAns[i]
 				},
 				on_finish: function (data) {
 					data.correct = data.response == data.correct_response;
-					final.push(present[i],corrAns[i],data.correct);
+					final.push(shuffledPresent[i],shuffledCorrAns[i],data.correct);
 					// data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
 				}
 			};
