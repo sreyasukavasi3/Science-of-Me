@@ -28,6 +28,7 @@ import Attention1 from "./AdminExperiments/Attention1/Attention1";
 import Faces9 from "./AdminExperiments/Faces9/Faces9";
 import MemoryObjects1 from "./AdminExperiments/MemoryObjects1/MemoryObjects1";
 import MemoryObjects6 from "./AdminExperiments/MemoryObjects6/MemoryObjects6";
+import PeripheralVision from "./AdminExperiments/PeripheralVision/PeripheralVision";
 import _TemplateExperiment from "./AdminExperiments/_TemplateExperiment";
 import FeaturedDashboard from "./Pages/FeaturedDashboard";
 
@@ -61,6 +62,7 @@ root.render(
 				<Route path="Faces9" element={<Faces9/>}/>
 				<Route path="MemoryObjects1" element={<MemoryObjects1/>}/>
 				<Route path="MemoryObjects6" element={<MemoryObjects6/>}/>
+				<Route path="PeripheralVision" element={<PeripheralVision/>}/>
 
 
 				{/* Display 404 page when no route match */}

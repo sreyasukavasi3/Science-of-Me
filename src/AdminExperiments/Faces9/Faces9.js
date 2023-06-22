@@ -306,6 +306,9 @@ function Faces9(props) {
     ]
 
 		for (let i = 0; i < 40; i++) {
+
+      console.log('Printinnnnnnnnnnnnnggggg')
+			console.log(i)
 			const t1Stimulus1 = {
                 type: htmlKeyboardResponse,
                 stimulus: `<img src="${present[i]}" width="50%">`,

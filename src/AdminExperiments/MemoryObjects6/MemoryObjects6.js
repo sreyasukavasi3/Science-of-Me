@@ -151,6 +151,9 @@ function MemoryObjects6(props) {
 			,'3','3','1','1','2','3','3']
 
 		for (let i = 0; i < 40; i++) {
+			console.log('Printinnnnnnnnnnnnnggggg')
+			console.log(present[i])
+			console.log(respond[i])
 			const t1Stimulus1 = {
 				type: htmlKeyboardResponse,
 				stimulus: present[i],

@@ -17,16 +17,16 @@ import {saveData} from "../../Utilities/SaveData";
 let final =[];
 const API_ENDPOINT = "https://e06hz3blkk.execute-api.us-east-2.amazonaws.com/default/GetsignedurlMemorylimit";
 
-const trials = [
-	{
-		"test1": {
-			"stimulus": "",
-			"question": "",
-			"solution": ""
-		}
-	}
+// const trials = [
+// 	{
+// 		"test1": {
+// 			"stimulus": "",
+// 			"question": "",
+// 			"solution": ""
+// 		}
+// 	}
 	
-]
+// ]
 
 function Attention1(props) {
 	useMemo(() => {
@@ -34,22 +34,6 @@ function Attention1(props) {
 		const jsPsych = initJsPsych({
 			onfinish: async() => {
 				saveData(jsPsych.data.get().json());
-				// console.log('HIIIIIII sreya')
-				// const response = await axios({
-				// 	method: "GET",
-				// 	url: API_ENDPOINT,
-					
-				//   });
-
-				// console.log("Response: ", response);
-
-				// const result = await fetch(response.data.uploadURL, {
-				// 	method: "PUT",
-				// 	headers: {
-				// 	  "Content-Type": "Inputfile/csv"
-				// 	},
-				// 	body: final,
-				//   });
 			}
 		});
 
@@ -200,6 +184,10 @@ function Attention1(props) {
 			,'7','7','3','3','3','3','3']
 
 		for (let i = 0; i < 40; i++) {
+			console.log('Printinnnnnnnnnnnnnggggg')
+			console.log(present1[i])
+			console.log(present2[i])
+			console.log(respond[i])
 			const t1Stimulus1 = {
 				type: htmlKeyboardResponse,
 				stimulus: present1[i],
