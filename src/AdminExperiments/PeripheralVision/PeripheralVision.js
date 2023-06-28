@@ -125,13 +125,13 @@ function PeripheralVision(props) {
 
 
             for (let i = 0; i < 30; i++) {
-                console.log('print somethingggg',i,shuffledXCord[i], shuffledYCord[i], shuffledCorrAns[i] );
+                // console.log('print somethingggg',i,shuffledXCord[i], shuffledYCord[i], shuffledCorrAns[i] );
                 if(shuffledCorrAns[i] == '1'){
                     const t1Stimulus1 = {
                         type: htmlKeyboardResponse,
-                        stimulus: `<div style="position: absolute; font-size: ${textSize}%;">${shuffledPresent[i]}</div>`,
+                        stimulus: `<div style="position: absolute; font-weight: bold; font-size: ${textSize}%;">${shuffledPresent[i]}</div>`,
                         choices: "NO_KEYS",
-                        trial_duration: 500,
+                        trial_duration: 320,
                     };
         
                     timeline.push(t1Stimulus1);
@@ -139,9 +139,9 @@ function PeripheralVision(props) {
                 }else {
                     const t1Stimulus1 = {
                     type: htmlKeyboardResponse,
-                    stimulus: `<div style="position: absolute; ${shuffledXCord[i]}: 50px; ${shuffledYCord[i]}: 50px; font-size: ${textSize}%;">${shuffledPresent[i]}</div>`,
+                    stimulus: `<div style="position: absolute; font-weight: bold; ${shuffledXCord[i]}: 50px; ${shuffledYCord[i]}: 50px; font-size: ${textSize}%;">${shuffledPresent[i]}</div>`,
                     choices: "NO_KEYS",
-                    trial_duration: 500,
+                    trial_duration: 320,
                     };
 
                     timeline.push(t1Stimulus1);
