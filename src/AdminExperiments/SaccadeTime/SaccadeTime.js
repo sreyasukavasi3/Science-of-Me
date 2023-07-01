@@ -15,9 +15,8 @@ import imageKeyboardResponse from '@jspsych/plugin-image-keyboard-response';
 import {saveData} from "../../Utilities/SaveData";
 
 let final =[];
+const data = [];
 let currentScore = 0;
-let j = 0;
-let k = 0;
 const API_ENDPOINT = "https://e06hz3blkk.execute-api.us-east-2.amazonaws.com/default/GetsignedurlMemorylimit";
 const trials = [
 	{
@@ -30,7 +29,7 @@ const trials = [
 	
 ]
 
-function PeripheralVision(props) {
+function SaccadeTime(props) {
 	useMemo(() => {
 		// Initialize jsPsych
 		const jsPsych = initJsPsych({
@@ -46,11 +45,12 @@ function PeripheralVision(props) {
 		const welcome = {
 			type: instructions,
 			pages: [
-				`<p style="font-size:21px;"><b> This experiment is designed to test your peripheral vision.
-                As you look at the center of the screen, letters will appear at various positions.
-                You will try to identify them. The letters will appear very briefly so you will not have time to move your eyes to reposition the letter to the center of your vision.
-                Hence, off-center letters will be testing your peripheral vision.
-                <br>Trials will begin with large letters that your peripheral vision will probably see clearly and then progress to smaller letters that it cannot see clearly.
+				`<p style="font-size:21px;"><b> In the previous experiment (PeripheralVis) you discovered that your peripheral vision had much lower acuity than your central vision. 
+				This fact was revealed by presenting letters in the corner or the center of the screen.  
+                <br> The letters were presented so briefly that you were unable to move your eyes (a saccade) to the corner of the screen in time to see the letter before it disappeared. 
+				<br> In order to determine the saccade time we can leave the letters on the screen for a longer period. 
+				<br> When the time is long enough for you to move your central vision to the corner of the screen, you will be able to perceive the identity of the small letters in the corner. 
+				<br> In this experiment the letters will remain small throughout the experiment but the time that they are present will decrease with each trial. 
 				<br> Press Next to continue.
                 </br></b></p>`,
 				
@@ -64,6 +64,22 @@ function PeripheralVision(props) {
         const welcome2 = {
 			type: instructions,
 			pages: [
+				`<p style="font-size:21px;"><b> In this experiment, a letter will appear briefly somewhere on the screen
+				Try to move your eye to see the letter.
+				<br> You will be asked which letter you saw.
+				<br> Press Next to continue.
+                </br></b></p>`,
+				
+			],
+			show_clickable_nav: true
+		};
+
+		// Add welcome step to timeline
+		timeline.push(welcome2);   
+
+		const welcome3 = {
+			type: instructions,
+			pages: [
 				`<p style="font-size:21px;"><b> There are 5 trials in total.
 				<br> Press Next to continue.
                 </br></b></p>`,
@@ -73,8 +89,9 @@ function PeripheralVision(props) {
 		};
 
 		// Add welcome step to timeline
-		timeline.push(welcome2);
+		timeline.push(welcome3);   
 
+        
 
 		// Adding present images list
 		const present = ['p', 'q','d','b','o','p','q','d','b','o',
@@ -85,32 +102,49 @@ function PeripheralVision(props) {
         const x_cord = ['left', 'right', 'left', 'right' ];
         const y_cord = ['top', 'top', 'bottom', 'bottom'];
 
-        // const size = [0.6, 0.4, 0.2, 0.12, 0.08]
-        const sizes = [600, 400, 200, 120, 80]
-		const corrAns = ['', '','','','','','','','','',
+        // const sizes = [600, 400, 200, 120, 80];
+		const frames = [320, 340, 380, 460, 620];
+		const corrAns = ['1', '1','1','1','1','1','1','1','1','1',
         'p','q','d','b','o','p','q','d','b','o',
         'p','q','d','b','o','p','q','d','b','o']
 		
+        // Shuffling function
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+          
+        const shuffleIndex = Array.from(Array(present.length).keys());
+        shuffleArray(shuffleIndex);
+
+        const shuffledPresent = shuffleIndex.map((index) => present[index]);
+        const shuffledXCord = shuffleIndex.map((index) => x_cord[index % 4]);
+        const shuffledYCord = shuffleIndex.map((index) => y_cord[index % 4]);
+        const shuffledCorrAns = shuffleIndex.map((index) => corrAns[index]);
+
         for (let t = 0; t < 5; t++) {
-            const textSize = sizes[t];
+            const duration = frames[t];
+			const textSize = 120;
             for (let i = 0; i < 30; i++) {
-                if(i<10){
+                // console.log('print somethingggg',i,shuffledXCord[i], shuffledYCord[i], shuffledCorrAns[i] );
+                if(shuffledCorrAns[i] == '1'){
                     const t1Stimulus1 = {
                         type: htmlKeyboardResponse,
-                        stimulus: `<div style="position: absolute; font-size: ${textSize}%;">${present[i]}</div>`,
+                        stimulus: `<div style="position: absolute; font-weight: bold; font-size: ${textSize}%;">${shuffledPresent[i]}</div>`,
                         choices: "NO_KEYS",
-                        trial_duration: 1000,
+                        trial_duration: duration,
                     };
         
                     timeline.push(t1Stimulus1);
 
                 }else {
-                    const cornerIndex = i % 4;
                     const t1Stimulus1 = {
                     type: htmlKeyboardResponse,
-                    stimulus: `<div style="position: absolute; ${x_cord[cornerIndex]}: 50px; ${y_cord[cornerIndex]}: 50px; font-size: ${textSize}%;">${present[i]}</div>`,
+                    stimulus: `<div style="position: absolute; font-weight: bold; ${shuffledXCord[i]}: 50px; ${shuffledYCord[i]}: 50px; font-size: ${textSize}%;"> ${shuffledPresent[i]}</div>`,
                     choices: "NO_KEYS",
-                    trial_duration: 1000,
+                    trial_duration: duration,
                     };
 
                     timeline.push(t1Stimulus1);
@@ -127,11 +161,11 @@ function PeripheralVision(props) {
 				
 				data: {
 					task: 'response',
-					correct_response: corrAns[i]
+					correct_response: shuffledCorrAns[i]
 				},
 				on_finish: function (data) {
 					data.correct = data.response == data.correct_response;
-					final.push(present[i],corrAns[i],data.correct);
+					final.push(shuffledPresent[i],shuffledCorrAns[i],data.correct);
 					// data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
 				}
 			};
@@ -154,10 +188,10 @@ function PeripheralVision(props) {
                 const correct_trials = trials.filter({correct: true});
                 
                 const score = correct_trials.count() - currentScore; // Calculate score for the current trial
-                console.log(`Total ${correct_trials.count()}` )
-                console.log(`Currentscore ${currentScore}` )
-                console.log(`displayscore ${score}` )
-                console.log('HIII HONEY')
+                // console.log(`Total ${correct_trials.count()}` )
+                // console.log(`Currentscore ${currentScore}` )
+                // console.log(`displayscore ${score}` )
+                // console.log('HIII HONEY')
                 currentScore = score+ currentScore; // Update the cumulative score
                 console.log(`Currentscoreafter ${currentScore}` )
                 return `<p style="font-size:21px;"><b>You scored ${score} out 20 questions correctly. The score includes only correct answers for letters appearing in the corners. </b></p>`
@@ -179,4 +213,4 @@ function PeripheralVision(props) {
 	);
 }
 
-export default PeripheralVision;
+export default SaccadeTime;
