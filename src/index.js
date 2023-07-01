@@ -29,6 +29,7 @@ import Faces9 from "./AdminExperiments/Faces9/Faces9";
 import MemoryObjects1 from "./AdminExperiments/MemoryObjects1/MemoryObjects1";
 import MemoryObjects6 from "./AdminExperiments/MemoryObjects6/MemoryObjects6";
 import PeripheralVision from "./AdminExperiments/PeripheralVision/PeripheralVision";
+import SaccadeTime from "./AdminExperiments/SaccadeTime/SaccadeTime";
 import _TemplateExperiment from "./AdminExperiments/_TemplateExperiment";
 import FeaturedDashboard from "./Pages/FeaturedDashboard";
 
@@ -63,6 +64,7 @@ root.render(
 				<Route path="MemoryObjects1" element={<MemoryObjects1/>}/>
 				<Route path="MemoryObjects6" element={<MemoryObjects6/>}/>
 				<Route path="PeripheralVision" element={<PeripheralVision/>}/>
+				<Route path="SaccadeTime" element={<SaccadeTime/>}/>
 
 
 				{/* Display 404 page when no route match */}
