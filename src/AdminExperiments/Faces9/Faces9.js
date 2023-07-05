@@ -323,35 +323,34 @@ function Faces9(props) {
 			const t1ResponseScreen = {
 				type: htmlKeyboardResponse,
                 stimulus: `
-  <div style="display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 10px;">
-    <div style="position: relative;">
-      <img src="${respond1[i]}" style="width: 100%; height: 100%;">
-      <div style="position: absolute; top: 5px; left: 5px; background-color: white; padding: 5px;">
-        <p style="font-size: 18px; margin: 0;">1</p>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 10px;">
+      <div style="position: relative;">
+        <img src="${respond1[i]}" style="width: 450px; height: 280px;">
+        <div style="position: absolute; top: 5px; left: 5px; background-color: white; padding: 5px;">
+          <p style="font-size: 18px; margin: 0;">1</p>
+        </div>
       </div>
-    </div>
-    <div style="position: relative;">
-      <img src="${respond2[i]}" style="width: 100%; height: 100%;">
-      <div style="position: absolute; top: 5px; left: 5px; background-color: white; padding: 5px;">
-        <p style="font-size: 18px; margin: 0;">2</p>
+      <div style="position: relative;">
+        <img src="${respond2[i]}" style="width: 450px; height: 280px;">
+        <div style="position: absolute; top: 5px; left: 5px; background-color: white; padding: 5px;">
+          <p style="font-size: 18px; margin: 0;">2</p>
+        </div>
       </div>
-    </div>
-    <div style="position: relative;">
-      <img src="${respond3[i]}" style="width: 100%; height: 100%;">
+      <div style="position: relative;">
+      <img src="${respond3[i]}" style="width: 450px; height: 280px;">
       <div style="position: absolute; top: 5px; left: 5px; background-color: white; padding: 5px;">
         <p style="font-size: 18px; margin: 0;">3</p>
       </div>
     </div>
     <div style="position: relative;">
-      <img src="${respond4[i]}" style="width: 100%; height: 100%;">
+      <img src="${respond4[i]}" style="width: 450px; height: 280px;">
       <div style="position: absolute; top: 5px; left: 5px; background-color: white; padding: 5px;">
         <p style="font-size: 18px; margin: 0;">4</p>
       </div>
     </div>
   </div>
-  <p style="font-size:21px;"><b>Press number for the image that matches the first</b></p>
+  <p style="font-size: 21px;"><b>Press the number for the image that matches the first</b></p>
 `,
-
 
                 choices: ['1', '2', '3', '4'],
 				// prompt: `<p style="font-size:21px;"><br>Press number for the image that matches the first.</b></p>`,
